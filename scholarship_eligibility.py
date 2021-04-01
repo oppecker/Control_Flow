@@ -62,40 +62,33 @@ def check_eligibility(age, time_in_cali, relevant_work, parent_cali_tax, volunte
     # inputs: Age, Time_in_Cali, Relevant_Work, Parent_Cali_Tax, Volunteer_work, Household_Income
     # returns: 1, 0, or "Dean for consideration"
 
-    # Calulate result_one
-    result_one = condition_a(age)
-
-    # If result_one is 0, not eligibile so return 0
-    if result_one == 0:
+    # Calulate condition a:
+    in_age_range = condition_a(age)
+    # If it is 0, not eligibile so return 0
+    if in_age_range == 0:
         return 0
 
-    # Calculate result_two
-    b = condition_b(time_in_cali)
-    if b:
-        # result_two is a 1!
-        result_two = b
-    else:
+    # Calculate condition b
+    lived_in_cali = condition_b(time_in_cali)
+    if lived_in_cali == 0:
         # condition_d can substitute for condition_b with parents tax history
-        result_two = condition_d(parent_cali_tax)
+        parents_paid_tax = condition_d(parent_cali_tax)
+        # If it is 0, not eligibile so return 0
+        if parents_paid_tax == 0:
+            return 0
 
-    # If result_two is 0, not eligibile so return 0
-    if result_two == 0:
-        return 0
-
-    # Calculate result_three.
-    c = condition_c(relevant_work)
-    if c:
-        # result_three is a 1!
-        result_three = c
-    else:
-        # condition_e can substitute for condition_c with volunteer work
-        result_three = condition_e(volunteer_work)
-        if result_three == 0:
-            # condition_f can turn failed condition_c into 'Dean for consideration'
-            result_three = condition_f(household_income)
-
-    # result_three contains the eligibility result, so return that.
-    return result_three
+    # Calculate condition c
+    has_work_experience = condition_c(relevant_work)
+    # if it is 1, return 1 for eligible!
+    if has_work_experience == 1:
+        return 1
+    # condition_e can substitute for condition_c with volunteer work
+    has_volunteer_work = condition_e(volunteer_work)
+    # if it is 1, return 1 for eligible!
+    if has_volunteer_work == 1:
+        return 1
+    # Finally return either 0 or 'Dean for consideration'
+    return condition_f(household_income)
 
 
 if __name__ == "__main__":
