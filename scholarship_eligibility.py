@@ -90,7 +90,7 @@ def check_eligibility(age, time_in_cali, relevant_work, parent_cali_tax, volunte
     else:
         # condition_e can substitute for condition_c with volunteer work
         result_three = condition_e(volunteer_work)
-        if not result_three:
+        if result_three == 0:
             # condition_f can turn failed condition_c into 'Dean for consideration'
             result_three = condition_f(household_income)
 
