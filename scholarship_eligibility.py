@@ -18,27 +18,6 @@ def condition_b(time_in_cali):
         print('Failed condition B')
         return 0
 
-def condition_b_alt(time_in_cali, parent_cali_tax):
-    # B: Student lived in California for last 2 years. If fails here, check if D is satisfied.
-    if time_in_cali > 2:
-        print('Passed condition B')
-        return 1
-    else:
-        print('Failed condition B')
-        return condition_d(parent_cali_tax)
-
-def condition_c_alt(relevant_work, volunteer_work, household_income):
-    # C: Has worked part time for at least 6 months in relevant field of study. If fails here, check if E is satisfied.
-    f = condition_f(household_income)
-    if f:
-        return f
-
-    if relevant_work >= 6:
-        return 1
-    else:
-        return condition_e(volunteer_work)
-
-
 def condition_c(relevant_work):
     # C: Has worked part time for at least 6 months in relevant field of study.
     if relevant_work >= 6:
@@ -51,7 +30,7 @@ def condition_c(relevant_work):
 
 def condition_d(parent_cali_tax):
     # D: Students Parents have paid California state tax for at least 1 year in their lifetime.
-    if parent_cali_tax is True:
+    if parent_cali_tax:
         print('Passed condition D')
         return 1
     else:
@@ -61,8 +40,9 @@ def condition_d(parent_cali_tax):
 
 def condition_e(volunteer_work):
     # E: Has volunteered for a cause and has a valid proof of it.
-    if volunteer_work is True:
+    if volunteer_work:
         print('Passed condition E')
+        print(volunteer_work)
         return 1
     else:
         print('Failed condition E')
@@ -122,11 +102,11 @@ def check_eligibility(age, time_in_cali, relevant_work, parent_cali_tax, volunte
 
 if __name__ == "__main__":
     my_parser = argparse.ArgumentParser()
-    my_parser.add_argument('age', type=int)
-    my_parser.add_argument('time_in_cali', type=int)
-    my_parser.add_argument('relevant_work', type=int)
-    my_parser.add_argument('parent_cali_tax', type=bool)
-    my_parser.add_argument('volunteer_work', type=bool)
-    my_parser.add_argument('household_income', type=int)
+    my_parser.add_argument('-a', '--age', type=int, help='In Years')
+    my_parser.add_argument('-b', '--time_in_cali', type=int, help='In Years')
+    my_parser.add_argument('-c', '--relevant_work', type=int, help='In Months')
+    my_parser.add_argument('-d', '--parent_cali_tax', type=int, help='In Years')
+    my_parser.add_argument('-e', '--volunteer_work', type=int, help='1 for Yes, 0 for No')
+    my_parser.add_argument('-f', '--household_income', type=int, help='In Dollars')
     args = my_parser.parse_args()
     print(check_eligibility(args.age, args.time_in_cali, args.relevant_work, args.parent_cali_tax, args.volunteer_work, args.household_income))
