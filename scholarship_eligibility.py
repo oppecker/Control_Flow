@@ -3,58 +3,46 @@ import argparse
 def condition_a(age):
     # A: Student Age from 18 - 24
     if 18 <= age <= 24:
-        print('Passed condition A')
         return 1
     else:
-        print('Failed condition A')
         return 0
 
 def condition_b(time_in_cali):
     # B: Student lived in California for last 2 years. If fails here, check if D is satisfied.
     if time_in_cali > 2:
-        print('Passed condition B')
         return 1
     else:
-        print('Failed condition B')
         return 0
 
 def condition_c(relevant_work):
     # C: Has worked part time for at least 6 months in relevant field of study.
     if relevant_work >= 6:
-        print('Passed condition C')
         return 1
     else:
-        print('Failed condition C')
         return 0
 
 
 def condition_d(parent_cali_tax):
     # D: Students Parents have paid California state tax for at least 1 year in their lifetime.
     if parent_cali_tax:
-        print('Passed condition D')
         return 1
     else:
-        print('Failed condition D')
         return 0
 
 
 def condition_e(volunteer_work):
     # E: Has volunteered for a cause and has a valid proof of it.
     if volunteer_work:
-        print('Passed condition E')
         return 1
     else:
-        print('Failed condition E')
         return 0
 
 
 def condition_f(household_income):
     # F: If household income less then 5000$ per year then no need to satisfy criteria C. Will be redirect to "Dean for consideration".
     if household_income <= 5000:
-        print('Passed condition F - "Dean for consideration"')
         return "Dean for consideration"
     else:
-        print('Failed condition F')
         return 0
 
 
