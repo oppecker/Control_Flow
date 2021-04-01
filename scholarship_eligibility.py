@@ -42,7 +42,6 @@ def condition_e(volunteer_work):
     # E: Has volunteered for a cause and has a valid proof of it.
     if volunteer_work:
         print('Passed condition E')
-        print(volunteer_work)
         return 1
     else:
         print('Failed condition E')
@@ -66,6 +65,10 @@ def check_eligibility(age, time_in_cali, relevant_work, parent_cali_tax, volunte
     # Calulate result_one
     result_one = condition_a(age)
 
+    # If result_one is 0, not eligibile so return 0
+    if result_one == 0:
+        return 0
+
     # Calculate result_two
     b = condition_b(time_in_cali)
     if b:
@@ -74,6 +77,10 @@ def check_eligibility(age, time_in_cali, relevant_work, parent_cali_tax, volunte
     else:
         # condition_d can substitute for condition_b with parents tax history
         result_two = condition_d(parent_cali_tax)
+
+    # If result_two is 0, not eligibile so return 0
+    if result_two == 0:
+        return 0
 
     # Calculate result_three.
     c = condition_c(relevant_work)
@@ -87,17 +94,8 @@ def check_eligibility(age, time_in_cali, relevant_work, parent_cali_tax, volunte
             # condition_f can turn failed condition_c into 'Dean for consideration'
             result_three = condition_f(household_income)
 
-
-    # Calculate eligibility result
-    if 0 in [result_one, result_two, result_three]:
-        # Return 0 if any result failed
-        return 0
-    elif 'Dean for consideration' in [result_one, result_two, result_three]:
-        # Return 'Dean for consideration' if that is in results
-        return 'Dean for consideration'
-    else:
-        # Return 1 if all results passed
-        return 1
+    # result_three contains the eligibility result, so return that.
+    return result_three
 
 
 if __name__ == "__main__":
